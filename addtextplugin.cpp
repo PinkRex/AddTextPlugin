@@ -28,12 +28,24 @@ void AddTextPlugin::edit(const cv::Mat &input, cv::Mat &output, QWidget* parent)
     if (!ok) return;
 
     if (!rect.isNull()) {
-        double scale = rect.width() / 100.0;
-        scale = qBound(0.5, scale, 3.0);
+        double fontScale = 3.0;
+        int thickness = 1;
+        int baseline = 0;
+        cv::Size textSize;
 
-        cv::Point pos(rect.x() + 10, rect.y() + 30);
+        for (double scale = 3.0; scale >= 0.5; scale -= 0.1) {
+            textSize = cv::getTextSize(text.toStdString(), cv::FONT_HERSHEY_SIMPLEX, scale, thickness, &baseline);
+            if (textSize.width <= rect.width() && textSize.height + baseline <= rect.height()) {
+                fontScale = scale;
+                break;
+            }
+        }
 
-        cv::putText(input, text.toStdString(), pos, cv::FONT_HERSHEY_SIMPLEX, scale, cv::Scalar(0, 255, 255), 1);
+        int x = rect.x() + (rect.width() - textSize.width) / 2;
+        int y = rect.y() + (rect.height() + textSize.height) / 2;
+
+        cv::putText(input, text.toStdString(), cv::Point(x, y), cv::FONT_HERSHEY_SIMPLEX, fontScale, cv::Scalar(0, 255, 255), thickness);
         output = input;
+
     }
 }
