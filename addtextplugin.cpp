@@ -29,7 +29,7 @@ void AddTextPlugin::edit(const cv::Mat &input, cv::Mat &output, QWidget* parent)
 
     if (!rect.isNull()) {
         double fontScale = 3.0;
-        int thickness = 1;
+        int thickness = 2;
         int baseline = 0;
         cv::Size textSize;
 
