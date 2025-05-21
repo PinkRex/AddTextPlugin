@@ -6,8 +6,9 @@
 #include <QInputDialog>
 #include <QEventLoop>
 #include <QDebug>
+#include <QImage>
+#include <QPixmap>
 #include "PhotoEditorPluginInterface.h"
-#include <DrawingInterface.h>
 
 class AddTextPlugin: public QObject, public PhotoEditorPluginInterface
 {
@@ -17,8 +18,6 @@ class AddTextPlugin: public QObject, public PhotoEditorPluginInterface
 public:
     QString name() override;
     void edit(const cv::Mat &input, cv::Mat &output, QWidget* parent) override;
-signals:
-    void requestDrawingMode(bool enable);
 };
 
 #endif // ADD_TEXT_PLUGIN_H
