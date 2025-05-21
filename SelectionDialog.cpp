@@ -30,7 +30,7 @@ void SelectionDialog::mouseReleaseEvent(QMouseEvent *event) {
         selection = QRect(origin, event->pos());
         selecting = false;
         update();
-        accept();  // Close dialog
+        accept();
     }
 }
 
@@ -39,6 +39,9 @@ void SelectionDialog::paintEvent(QPaintEvent *event) {
     painter.drawImage(0, 0, image);
 
     if (!selection.isNull()) {
+        QColor fillColor(255, 0, 0, 80);
+        painter.fillRect(selection, fillColor);
+
         QPen pen(Qt::red, 2, Qt::DashLine);
         painter.setPen(pen);
         painter.drawRect(selection);
